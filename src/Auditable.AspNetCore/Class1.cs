@@ -7,11 +7,11 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class RequestCultureMiddleware
+    public class InitiatorMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public RequestCultureMiddleware(RequestDelegate next)
+        public InitiatorMiddleware(RequestDelegate next)
         {
             _next = next;
         }

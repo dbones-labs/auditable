@@ -8,7 +8,7 @@
 
     public static class SetupAuditable
     {
-        public static IServiceCollection ConfigureAuditable(this IServiceCollection services)
+        public static IServiceCollection AddAuditable(this IServiceCollection services)
         {
             //core
             services.AddTransient<IAuditable, Auditable>();

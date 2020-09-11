@@ -2,7 +2,8 @@
 {
     public class RequestContext
     {
-        public string RequestId { get; set; }
-        public string CorrelationId { get; set; }
+        public string SpanId { get; set; }
+        public string TraceId { get; set; }
+        public string ParentId { get; set; }
     }
 }

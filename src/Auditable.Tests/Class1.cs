@@ -16,15 +16,26 @@
 
     public static class ApplicationContainer
     {
-        public static IServiceProvider Build(Action<IServiceCollection> setup = null)
+        public static IServiceCollection Setup(this IServiceCollection serviceCollection, 
+            Action<IServiceCollection> setup = null,
+            Action<IServiceCollection> configureAuditable = null)
         {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.ConfigureAuditable();
+
+            configureAuditable?.Invoke(serviceCollection);
             serviceCollection.AddSingleton<IWriter, TestWriter>();
             serviceCollection.AddSingleton(ctx => (TestWriter)ctx.GetService<IWriter>());
             serviceCollection.AddSingleton<IAuditIdGenerator, TestIdGen>();
 
             setup?.Invoke(serviceCollection);
+            return serviceCollection;
+        }
+
+        public static IServiceProvider Build(
+            Action<IServiceCollection> setup = null,
+            Action<IServiceCollection> configureAuditable = null)
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.Setup(setup, configureAuditable);
             return serviceCollection.BuildServiceProvider();
         }
     }

@@ -5,7 +5,6 @@
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Collectors;
-    using CSharpVitamins;
     using Microsoft.Extensions.Logging;
     using Parsing;
     using Writers;
@@ -144,19 +143,6 @@
             {
                 _logger.LogDebug("code had an exception, will not write the audit entry");
             }
-        }
-    }
-
-    public interface IAuditIdGenerator
-    { 
-        string GenerateId();
-    }
-
-    class AuditIdGenerator : IAuditIdGenerator
-    {
-        public string GenerateId()
-        {
-            return ShortGuid.NewGuid();
         }
     }
 }

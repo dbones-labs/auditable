@@ -1,14 +1,14 @@
-﻿using System;
-
-namespace Auditable.AspNetCore.Tests
+﻿namespace Auditable.AspNetCore.Tests
 {
+    using System;
     using System.Collections.Generic;
+    using System.Net.Http;
     using System.Security.Claims;
     using System.Text.Encodings.Web;
-    using System.Threading;
     using System.Threading.Tasks;
     using Extractors;
     using global::Auditable.Tests;
+    using OpenTelemetry.Trace;
     using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.AspNetCore.Authentication;
@@ -17,35 +17,48 @@ namespace Auditable.AspNetCore.Tests
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Testing;
+    using Microsoft.AspNetCore.TestHost;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using Parsing;
+    using Writers;
+    using Environment = global::Auditable.Extractors.Environment;
 
     [Subject("auditable")]
-    public class When_creating_a_log_entry
+    public class When_creating_a_log_entry_with_an_authorized_user_and_request_id
     {
         static CustomWebApplicationFactory<Startup> _factory;
-        static IAuditableContext _subject;
         static TestWriter _writer;
-        
-        Establish context = () =>
+        static HttpClient _client;
+
+
+        private Establish context = () =>
         {
             SystemDateTime.SetDateTime(() => new DateTime(1980, 01, 02, 10, 3, 15, DateTimeKind.Utc));
-            _factory = new CustomWebApplicationFactory<Startup>();
-
+            _writer = new TestWriter();
+            _factory = new CustomWebApplicationFactory<Startup>(services =>
+            {
+                services.AddSingleton<IWriter>(_writer);
+            });
 
 
             
-            
+            _client = _factory.CreateClient();
+            //"traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+            _client.DefaultRequestHeaders.Add("traceparent", new []{ "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01" });
         };
 
-        Because of = () => _subject.WriteLog().Await();
+        Because of = () => _client.GetAsync("/test").Await();
 
         It should_add_the_expected_log_entry = () =>
-            Helpers.Compare(_writer.First.Deserialize(), _expeted, comparer => comparer.IgnoreMember("Delta"));
+            Helpers.Compare(_writer.First.Deserialize(), _expeted, comparer =>
+            {
+                comparer.IgnoreMember("Delta");
+                comparer.IgnoreMember("SpanId");
+            });
 
 
         Cleanup after = () => _factory.Dispose(); 
@@ -53,22 +66,30 @@ namespace Auditable.AspNetCore.Tests
         static AuditableEntry _expeted => new AuditableEntry
         {
             Id = Helpers.AuditId,
-            Action = "Person.Created",
+            Action = "test.get",
             DateTime = SystemDateTime.UtcNow,
             Environment = new Environment
             {
                 Host = Helpers.Host,
                 Application = Helpers.Application
             },
-            Initiator = null,
-            Request = null,
+            Initiator = new Initiator
+            {
+                Id = "abc-123",
+                Name = "dave"
+            },
+            Request = new RequestContext
+            {
+                ParentId = "00f067aa0ba902b7",
+                TraceId = "4bf92f3577b34da6a3ce929d0e0e4736"
+            },
             Targets = new List<AuditableTarget>
             {
                 new AuditableTarget
                 {
-                    Id = null,
-                    Audit = AuditType.Modified,
-                    Style = ActionStyle.Observed,
+                    Id = "123",
+                    Audit = AuditType.Read,
+                    Style = ActionStyle.Explicit,
                     Type = typeof(Person).FullName
                 }
             }
@@ -81,10 +102,28 @@ namespace Auditable.AspNetCore.Tests
     public class CustomWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class
     {
+        private readonly Action<IServiceCollection> _setupOverride;
+
+        public CustomWebApplicationFactory(Action<IServiceCollection> setupOverride)
+        {
+            _setupOverride = setupOverride;
+        }
+
+        protected override IHostBuilder CreateHostBuilder()
+        {
+            var builder = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(x =>
+                {
+                    x.UseStartup<TStartup>().UseTestServer();
+                });
+            return builder;
+        }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
+
                 services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = DisabledAuthValues.Scheme;
@@ -92,17 +131,13 @@ namespace Auditable.AspNetCore.Tests
                 }).AddTestAuth(o => { });
 
 
+                //this is setting up Auditable with ASPNET components
+                services.AddAuditable();
 
-                var container = ApplicationContainer.Build();
-                var scope = container.CreateScope();
-                var auditable = scope.ServiceProvider.GetService<IAuditable>();
-                _writer = scope.ServiceProvider.GetService<TestWriter>();
 
-                var person = new Person();
-                person.Id = "123";
-                person.Age = 38;
-                person.Name = "Dave";
-
+                //Testing setupOverride
+                services.Setup(_setupOverride);
+ 
             });
         }
 
@@ -147,9 +182,10 @@ namespace Auditable.AspNetCore.Tests
 
     public class TestAuthenticationOptions : AuthenticationSchemeOptions
     {
-        public virtual ClaimsIdentity Identity { get; } = new ClaimsIdentity(new Claim[]
+        public virtual ClaimsIdentity Identity { get; } = new ClaimsIdentity(new[]
         {
-            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", Guid.NewGuid().ToString()),
+            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "abc-123"),
+            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "dave")
         }, "test");
     }
 
@@ -172,11 +208,12 @@ namespace Auditable.AspNetCore.Tests
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var auditContext = _auditable.CreateContext("test.get");
+            await using var auditContext = _auditable.CreateContext("test.get");
             auditContext.Read<Person>("123");
 
-            await auditContext.WriteLog();
-            return new OkResult();   
+            _logger.LogInformation("called the get method, and did some awesome things");
+
+            return new OkResult();
         }
     }
 
@@ -192,6 +229,13 @@ namespace Auditable.AspNetCore.Tests
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddOpenTelemetryTracerProvider(
+                (builder) => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddConsoleExporter()
+            );
+
             services
                 .AddControllers(options =>
                 {
@@ -202,20 +246,23 @@ namespace Auditable.AspNetCore.Tests
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //add middleware
-            app.UseMiddleware<InitiatorMiddleware>();
-     
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-     
+
+            //add middleware
+            app.UseMiddleware<RequestMiddleware>();
+            app.UseMiddleware<InitiatorMiddleware>();
+
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

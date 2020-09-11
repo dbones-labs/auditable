@@ -1,8 +1,9 @@
 ﻿namespace Auditable
 {
+    using System;
     using System.Threading.Tasks;
 
-    public interface IAuditableContext
+    public interface IAuditableContext : IDisposable, IAsyncDisposable
     {
         void WatchTargets(params object[] targets);
         void Removed<T>(string id);

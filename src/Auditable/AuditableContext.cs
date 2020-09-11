@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using CSharpVitamins;
     using Extractors;
+    using Microsoft.Extensions.Logging;
     using Parsing;
     using Writers;
 
@@ -16,6 +18,7 @@
         private readonly IDifferenceEngine _engine;
         private readonly IWriter _writer;
         private readonly IAuditIdGenerator _auditIdGenerator;
+        private readonly ILogger<AuditableContext> _logger;
         private string _name;
         private readonly Dictionary<string, Target> _targets = new Dictionary<string, Target>();
 
@@ -25,7 +28,8 @@
             JsonSerializer serializer,
             IDifferenceEngine engine,
             IWriter writer,
-            IAuditIdGenerator auditIdGenerator
+            IAuditIdGenerator auditIdGenerator,
+            ILogger<AuditableContext> logger
         )
         {
             _parser = parser;
@@ -34,6 +38,7 @@
             _engine = engine;
             _writer = writer;
             _auditIdGenerator = auditIdGenerator;
+            _logger = logger;
         }
 
         public void WatchTargets(params object[] targets)
@@ -98,8 +103,10 @@
                 target.Delta = diff;
             }
 
-            var parsedOutput = await _parser.Parse(_auditIdGenerator.GenerateId(), _name, _targets.Values);
+            var id = _auditIdGenerator.GenerateId();
+            var parsedOutput = await _parser.Parse(id, _name, _targets.Values);
             await _writer.Write(parsedOutput);
+            _logger.LogDebug($"wrote autiable entry: {id}");
         }
 
         public void SetName(string name)
@@ -110,6 +117,33 @@
         private string GetKey(Type type, string id)
         {
             return $"{type.FullName}-{id}";
+        }
+
+        /// <summary>
+        /// this will write the audit log if the code did not throw an exception
+        /// </summary>
+        public void Dispose()
+        {
+            DisposeAsync().AsTask().Wait();
+        }
+
+        /// <summary>
+        /// this will write the audit log if the code did not throw an exception
+        /// </summary>
+        /// <remarks>
+        /// https://stackoverflow.com/questions/149609/c-sharp-using-syntax
+        /// https://ayende.com/blog/2577/did-you-know-find-out-if-an-exception-was-thrown-from-a-finally-block
+        /// </remarks>
+        public async ValueTask DisposeAsync()
+        {
+            if (Marshal.GetExceptionCode() == 0)
+            {
+                await WriteLog();
+            }
+            else
+            {
+                _logger.LogDebug("code had an exception, will not write the audit entry");
+            }
         }
     }
 

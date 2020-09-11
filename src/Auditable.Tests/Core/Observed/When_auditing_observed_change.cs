@@ -17,7 +17,7 @@ namespace Auditable.Tests.Core
         private Establish context = () =>
         {
             SystemDateTime.SetDateTime(() => new DateTime(1980, 01, 02, 10, 3, 15, DateTimeKind.Utc));
-            var container = ApplicationContainer.Build();
+            var container = ApplicationContainer.Build(configureAuditable: services => services.AddAuditable());
             var scope = container.CreateScope();
             var auditable = scope.ServiceProvider.GetService<IAuditable>();
             _writer = scope.ServiceProvider.GetService<TestWriter>();

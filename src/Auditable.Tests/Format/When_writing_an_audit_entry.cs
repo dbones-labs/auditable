@@ -1,8 +1,8 @@
-﻿namespace Auditable.Tests.Payload
+﻿namespace Auditable.Tests.Format
 {
     using System;
     using System.Linq;
-    using Models.Simple;
+    using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using PowerAssert;

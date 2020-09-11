@@ -1,7 +1,7 @@
 ﻿namespace Auditable
 {
     using System;
-    using Extractors;
+    using Collectors;
     using Microsoft.Extensions.DependencyInjection;
     using Parsing;
     using Writers;

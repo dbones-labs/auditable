@@ -1,12 +1,12 @@
-﻿namespace Auditable.Tests.Payload
+﻿namespace Auditable.Tests.Format
 {
     using System;
     using System.Collections.Generic;
+    using global::Auditable.Parsing;
+    using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
-    using Models.Simple;
-    using Parsing;
-    using Environment = global::Auditable.Extractors.Environment;
+    using Environment = global::Auditable.Collectors.Environment;
 
     [Subject("auditable")]
     public class When_creating_a_log_entry

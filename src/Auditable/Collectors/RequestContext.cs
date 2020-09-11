@@ -1,4 +1,4 @@
-﻿namespace Auditable.Extractors
+﻿namespace Auditable.Collectors
 {
     public class RequestContext
     {

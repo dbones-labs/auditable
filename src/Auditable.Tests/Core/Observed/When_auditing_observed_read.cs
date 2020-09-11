@@ -1,13 +1,13 @@
-﻿using Env = Auditable.Extractors.Environment;
+﻿using Env = Auditable.Collectors.Environment;
 
-namespace Auditable.Tests.Core
+namespace Auditable.Tests.Core.Observed
 {
     using System;
     using System.Collections.Generic;
+    using global::Auditable.Parsing;
+    using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
-    using Models.Simple;
-    using Parsing;
 
     [Subject("auditable")]
     public class When_auditing_observed_read

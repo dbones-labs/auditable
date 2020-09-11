@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using Extractors;
-    using Environment = Extractors.Environment;
+    using Collectors;
+    using Environment = Collectors.Environment;
 
     public class AuditableEntry
     {

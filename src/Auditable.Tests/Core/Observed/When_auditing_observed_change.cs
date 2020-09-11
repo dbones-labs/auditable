@@ -1,14 +1,14 @@
-﻿using Env = Auditable.Extractors.Environment;
+﻿using Env = Auditable.Collectors.Environment;
 
-namespace Auditable.Tests.Core
+namespace Auditable.Tests.Core.Observed
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using global::Auditable.Parsing;
+    using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
-    using Models.Simple;
-    using Parsing;
     using PowerAssert;
 
     [Subject("auditable")]

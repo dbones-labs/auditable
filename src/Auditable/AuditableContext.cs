@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
+    using Collectors;
     using CSharpVitamins;
-    using Extractors;
     using Microsoft.Extensions.Logging;
     using Parsing;
     using Writers;

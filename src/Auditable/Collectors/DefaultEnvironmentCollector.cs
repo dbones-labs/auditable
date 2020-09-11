@@ -1,4 +1,4 @@
-﻿namespace Auditable.Extractors
+﻿namespace Auditable.Collectors
 {
     using System.Reflection;
     using System.Threading.Tasks;

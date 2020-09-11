@@ -3,11 +3,6 @@
     using JsonDiffPatchDotNet;
     using Newtonsoft.Json.Linq;
 
-    public interface IDifferenceEngine
-    {
-        JToken Differences(string left, string right);
-    }
-
     public class DifferenceEngine : IDifferenceEngine
     {
         public JToken Differences(string left, string right)

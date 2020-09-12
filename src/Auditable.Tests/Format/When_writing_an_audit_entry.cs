@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Configuration;
     using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;

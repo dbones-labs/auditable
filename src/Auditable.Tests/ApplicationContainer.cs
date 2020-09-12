@@ -3,6 +3,7 @@
     using System;
     using Writers;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     public static class ApplicationContainer
     {
@@ -25,6 +26,7 @@
             Action<IServiceCollection> configureAuditable = null)
         {
             IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(configure => configure.AddConsole());
             serviceCollection.Setup(setup, configureAuditable);
             return serviceCollection.BuildServiceProvider();
         }

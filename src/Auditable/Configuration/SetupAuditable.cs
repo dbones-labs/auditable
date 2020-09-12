@@ -1,10 +1,11 @@
-﻿namespace Auditable
+﻿namespace Auditable.Configuration
 {
     using System;
     using Collectors;
-    using Microsoft.Extensions.DependencyInjection;
     using Parsing;
     using Writers;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
 
     public static class SetupAuditable
     {
@@ -31,5 +32,24 @@
 
             return services;
         }
+
+        //public static IHostBuilder ConfigureAllAboard(this IHostBuilder builder, Action<HostSetup> conf)
+        //{
+        //    var setup = new HostSetup();
+        //    conf(setup);
+
+        //    builder.ConfigureServices((ctx, services) =>
+        //    {
+        //        var baseFactory = new Factory();
+        //        baseFactory.RegisterServices(services);
+
+        //        setup.DataStoreProvider.RegisterServices(services);
+        //        setup.MessagingProvider.RegisterServices(services);
+        //    });
+
+        //    return builder;
+        //}
     }
+
+
 }

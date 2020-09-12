@@ -5,6 +5,7 @@ namespace Auditable.Tests.Core.Observed
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Configuration;
     using global::Auditable.Parsing;
     using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;

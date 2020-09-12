@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Configuration;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using Models.Simple;

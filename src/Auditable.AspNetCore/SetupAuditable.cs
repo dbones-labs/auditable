@@ -9,7 +9,7 @@
         public static IServiceCollection AddAuditableForAspNet(this IServiceCollection services)
         {
             //setup the base auditbale
-            global::Auditable.SetupAuditable.AddAuditable(services);
+            global::Auditable.Configuration.SetupAuditable.AddAuditable(services);
 
             //override or add ASP.NET components
             //collectors

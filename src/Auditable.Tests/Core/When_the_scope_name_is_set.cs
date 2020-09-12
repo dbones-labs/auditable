@@ -1,6 +1,7 @@
 ﻿namespace Auditable.Tests.Core
 {
     using System;
+    using Configuration;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using Models.Simple;

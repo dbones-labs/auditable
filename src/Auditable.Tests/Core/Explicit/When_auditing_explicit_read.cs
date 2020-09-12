@@ -4,6 +4,7 @@ namespace Auditable.Tests.Core.Explicit
 {
     using System;
     using System.Collections.Generic;
+    using Configuration;
     using global::Auditable.Parsing;
     using global::Auditable.Tests.Models.Simple;
     using Machine.Specifications;

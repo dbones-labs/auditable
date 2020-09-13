@@ -4,7 +4,7 @@
     using Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
-    public class FileWriterProvider : IWriterProvider, ISetupOptions<FileWriterOptions>
+    public class File : IWriterProvider, ISetupOptions<FileWriterOptions>
     {
         Action<FileWriterOptions> _options;
 

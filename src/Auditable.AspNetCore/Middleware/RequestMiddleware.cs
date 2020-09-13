@@ -1,8 +1,9 @@
-﻿namespace Auditable.AspNetCore
+﻿namespace Auditable.AspNetCore.Middleware
 {
     using System.Diagnostics;
     using System.Threading.Tasks;
     using Collectors;
+    using global::Auditable.Collectors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 

@@ -16,7 +16,7 @@
 
         public LogEntry First => Entries.FirstOrDefault();
 
-        public Task Write(string entry)
+        public Task Write(string id, string action, string entry)
         {
             Entries.Add(new LogEntry(entry));
             return Task.CompletedTask;

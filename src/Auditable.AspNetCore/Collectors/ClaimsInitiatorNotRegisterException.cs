@@ -1,4 +1,4 @@
-﻿namespace Auditable.AspNetCore
+﻿namespace Auditable.AspNetCore.Collectors
 {
     using System;
 

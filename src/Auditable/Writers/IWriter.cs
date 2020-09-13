@@ -4,6 +4,6 @@
 
     public interface IWriter
     {
-        Task Write(string entry);
+        Task Write(string id, string action, string entry);
     }
 }

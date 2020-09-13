@@ -104,7 +104,7 @@
 
             var id = _auditIdGenerator.GenerateId();
             var parsedOutput = await _parser.Parse(id, _name, _targets.Values);
-            await _writer.Write(parsedOutput);
+            await _writer.Write(id, _name, parsedOutput);
             _logger.LogDebug($"wrote autiable entry: {id}");
         }
 

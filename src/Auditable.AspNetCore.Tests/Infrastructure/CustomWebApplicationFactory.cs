@@ -1,6 +1,7 @@
-﻿namespace Auditable.AspNetCore.Tests
+﻿namespace Auditable.AspNetCore.Tests.Infrastructure
 {
     using System;
+    using Configuration;
     using global::Auditable.Tests;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -20,7 +21,13 @@
 
         protected override IHostBuilder CreateHostBuilder()
         {
-            var builder = Host.CreateDefaultBuilder()
+            var builder = Host
+                .CreateDefaultBuilder()
+                .ConfigureAuditable(conf =>
+                {
+                    //this is registering the ASPNET dependencies
+                    conf.Use<AspNet>();
+                })
                 .ConfigureWebHostDefaults(x =>
                 {
                     x.UseStartup<TStartup>().UseTestServer();
@@ -40,8 +47,9 @@
                 }).AddTestAuth(o => { });
 
 
+                //You can do it this way!!!
                 //this is setting up Auditable with ASPNET components
-                services.AddAuditableForAspNet();
+                //services.AddAuditableForAspNet();
 
 
                 //Testing setupOverride

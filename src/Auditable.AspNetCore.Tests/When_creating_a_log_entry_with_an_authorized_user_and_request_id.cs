@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.Net.Http;
     using Collectors;
+    using global::Auditable.Collectors;
     using global::Auditable.Tests;
     using global::Auditable.Tests.Models.Simple;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using Parsing;

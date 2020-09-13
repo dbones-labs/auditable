@@ -1,4 +1,4 @@
-﻿namespace Auditable.AspNetCore.Tests
+﻿namespace Auditable.AspNetCore.Tests.Infrastructure
 {
     public static class DisabledAuthValues
     {

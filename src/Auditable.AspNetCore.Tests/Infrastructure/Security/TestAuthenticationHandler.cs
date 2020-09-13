@@ -1,4 +1,4 @@
-﻿namespace Auditable.AspNetCore.Tests
+﻿namespace Auditable.AspNetCore.Tests.Infrastructure
 {
     using System.Security.Claims;
     using System.Text.Encodings.Web;

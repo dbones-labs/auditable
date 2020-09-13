@@ -1,7 +1,7 @@
-﻿namespace Auditable.AspNetCore
+﻿namespace Auditable.AspNetCore.Collectors
 {
     using System.Threading.Tasks;
-    using Collectors;
+    using global::Auditable.Collectors;
 
     class ClaimsInitiatorCollector : IInitiatorCollector
     {

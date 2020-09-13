@@ -1,11 +1,9 @@
-﻿namespace Auditable.AspNetCore
+﻿namespace Auditable.AspNetCore.Middleware
 {
-    using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Security.Claims;
-    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
     using Collectors;
+    using global::Auditable.Collectors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 

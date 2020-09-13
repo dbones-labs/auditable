@@ -6,9 +6,15 @@
     using Writers;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Writers.Console;
 
     public static class SetupAuditable
     {
+        /// <summary>
+        /// Setup Auditable with default setup.
+        /// Consider using the <seealso cref="ConfigureAuditable"/>, which provides better integration with the <see cref="IHostBuilder"/>
+        /// </summary>
+        /// <param name="services">the setup</param>
         public static IServiceCollection AddAuditable(this IServiceCollection services)
         {
             //core
@@ -33,23 +39,26 @@
             return services;
         }
 
-        //public static IHostBuilder ConfigureAllAboard(this IHostBuilder builder, Action<HostSetup> conf)
-        //{
-        //    var setup = new HostSetup();
-        //    conf(setup);
+        /// <summary>
+        /// setup Auditable with the defaults
+        /// </summary>
+        /// <param name="builder">this <see cref="IHostBuilder"/> of the application</param>
+        /// <param name="conf">allows you to provides extensions and overrides</param>
+        public static IHostBuilder ConfigureAuditable(this IHostBuilder builder, Action<AuditableExtension> conf = null)
+        {
+            var setup = new AuditableExtension();
+            conf?.Invoke(setup);
 
-        //    builder.ConfigureServices((ctx, services) =>
-        //    {
-        //        var baseFactory = new Factory();
-        //        baseFactory.RegisterServices(services);
+            builder.ConfigureServices((ctx, services) =>
+            {
+                //setup the base
+                services.AddAuditable();
 
-        //        setup.DataStoreProvider.RegisterServices(services);
-        //        setup.MessagingProvider.RegisterServices(services);
-        //    });
+                //setup mods
+                setup.RegisterServices(services);
+            });
 
-        //    return builder;
-        //}
+            return builder;
+        }
     }
-
-
 }

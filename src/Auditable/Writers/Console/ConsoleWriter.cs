@@ -1,11 +1,11 @@
-﻿namespace Auditable.Writers
+﻿namespace Auditable.Writers.Console
 {
     using System;
     using System.Threading.Tasks;
 
     public class ConsoleWriter : IWriter
     {
-        public Task Write(string entry)
+        public Task Write(string id, string action, string entry)
         {
             Console.WriteLine(entry);
             return Task.CompletedTask;

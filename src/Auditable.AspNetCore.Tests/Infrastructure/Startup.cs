@@ -40,11 +40,8 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-
             //ensure its after auth*
             app.UseAuditable();
-
-
 
             app.UseEndpoints(endpoints =>
             {

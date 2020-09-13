@@ -32,6 +32,47 @@ the following is a typical picture, but the real answer is: It depends (on your 
 
 # Code teaser
 
+Lets take ASPNET Core, please consider using the OpenTelemetry package to get all the data.
+
+## 1. Builder
+
+```
+var builder = Host
+    .CreateDefaultBuilder()
+    .ConfigureAuditable(conf =>
+    {
+        conf.Use<AspNet>();     //this is registering the ASPNET dependencies
+        conf.UseWriter<File>(); //note the default writer is console
+    })
+    .ConfigureWebHostDefaults(x =>
+    {
+        x.UseStartup<TStartup>().UseTestServer();
+    });
+```
+
+## 2. AspNET startup
+
+```
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseRouting();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    //ensure its after auth*
+    app.UseAuditable();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+
+}
+```
+
+## 3. add some auditable logs
+
 ```
 [Route("/Account")]
 [Authorize]
@@ -72,4 +113,3 @@ public class AccountController :  Controller
     }
 }
 ```
-

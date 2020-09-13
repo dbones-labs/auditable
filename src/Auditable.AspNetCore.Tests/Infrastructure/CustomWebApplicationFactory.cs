@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.TestHost;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Writers.File;
 
     public class CustomWebApplicationFactory<TStartup>
         : WebApplicationFactory<TStartup> where TStartup : class
@@ -27,6 +28,7 @@
                 {
                     //this is registering the ASPNET dependencies
                     conf.Use<AspNet>();
+                    //conf.UseWriter<File>();
                 })
                 .ConfigureWebHostDefaults(x =>
                 {

@@ -73,17 +73,19 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 
 ## 3. add some auditable logs
 
+imagine you want to load an account instance from the db and update it.
+
 ```
 [Route("/Account")]
 [Authorize]
-public class AccountController :  Controller
+public class AccountController : Controller
 {
-    private readonly IDocumentSession _session;
+    private readonly DocumentSession _session;
     private readonly IAuditable _auditable;
     private readonly ILogger<TestController> _logger;
 
-    public TestController(
-        IDocumentSession session,
+    public AccountController(
+        DocumentSession session,
         IAuditable auditable,
         ILogger<TestController> logger)
     {
@@ -96,7 +98,7 @@ public class AccountController :  Controller
     [HttpPut]
     public async Task<ActionResult> Put(AccountResource updatedAccount)
     {
-        if (account == null) throw new ArgumentNullException(nameof(updatedAccount));
+        if (updatedAccount == null) throw new ArgumentNullException(nameof(updatedAccount));
         await using var auditContext = _auditable.CreateContext("Account.Update");
 
         var account = await _session.GetById(updatedAccount.Id);
@@ -107,7 +109,7 @@ public class AccountController :  Controller
 
         _logger.LogInformation("log out system information as normal");
         return new OkResult();
-        
+
         //as we are within a using block, this will write the auditable entry
         //at this point.
     }
@@ -117,6 +119,14 @@ public class AccountController :  Controller
 ## output app-dir\1980-01-02-10-03-15_audit-id.auditable
 
 a file is created for this audit entry (without line breaks)
+
+there is some keys bits of information:
+
+- Initiator - is the person making the change (note this should support OAuth2/OIDC)
+- Environment - is the server that is running the app, and what version of the app
+- Request - is information about the single request (pulling the w3c info using OpenTelemetry)
+- Targets - all the objects being observed to see if they were Read, Modified or Deleted
+- Id - is the unique id of the Auditable entry
 
 ```
 {
@@ -152,3 +162,9 @@ a file is created for this audit entry (without line breaks)
     "Id": "audit-id"
 }
 ```
+
+# Why call it Auditable
+
+All the information we are capturing is to support an Audit from an Auditor (typically external). They will look over the Auditable Entries during their Audit. Once the External Audit of an Application is complete, they will produce an Audit Report.
+
+So by using this your application is `Auditable`.

@@ -17,7 +17,8 @@
         {
             var file = _options.Value.GetFileName(id, action);
             var folder = _options.Value.Folder;
-            System.IO.File.WriteAllText(Path.Combine(folder, file), entry);
+            var path = Path.Combine(folder, file);
+            System.IO.File.WriteAllText(path, entry);
             return Task.CompletedTask;
         }
     }

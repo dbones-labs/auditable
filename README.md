@@ -113,3 +113,42 @@ public class AccountController :  Controller
     }
 }
 ```
+
+## output app-dir\1980-01-02-10-03-15_audit-id.auditable
+
+a file is created for this audit entry (without line breaks)
+
+```
+{
+    "Action": "Account.Update",
+    "DateTime": "1980-01-02T10:03:15Z",
+    "Initiator": {
+        "Id": "abc-123",
+        "Name": "dave"
+    },
+    "Environment": {
+        "Host": "LAPTOP-VRDBEDO2",
+        "Application": "testhost.x86, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+    },
+    "Request": {
+        "SpanId": "16ba66e3222c3149",
+        "TraceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+        "ParentId": "00f067aa0ba902b7"
+    },
+    "Targets": [
+        {
+            "Type": "Auditable.AspNetCore.Tests.Account",
+            "Id": "2",
+            "Delta": {
+                "Name": [
+                    "Dave",
+                    "Chan"
+                ]
+            },
+            "Style": "Observed",
+            "Audit": "Modified"
+        }
+    ],
+    "Id": "audit-id"
+}
+```

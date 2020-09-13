@@ -6,7 +6,7 @@
 
     public class File : IWriterProvider, ISetupOptions<FileWriterOptions>
     {
-        Action<FileWriterOptions> _options;
+        Action<FileWriterOptions> _options = options => { };
 
         public void RegisterServices(IServiceCollection services)
         {

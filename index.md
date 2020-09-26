@@ -1,37 +1,103 @@
-## Welcome to GitHub Pages
+---
+title: auditable
+has_children: false
+nav_order: 1
+---
 
-You can use the [editor on GitHub](https://github.com/dbones-labs/auditable/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+# Welcome to `auditable`
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This is a small auditing framework
 
-### Markdown
+The need for auditing already exists in projects, the requirement to log information to prove something happened, but also to capture who, what and when a business action happened.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+# Code teaser
 
-```markdown
-Syntax highlighted code block
+Lets take ASPNET Core, please consider using the OpenTelemetry package to get all the data.
 
-# Header 1
-## Header 2
-### Header 3
+## 1. Builder
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+var builder = Host
+    .CreateDefaultBuilder()
+    .ConfigureAuditable(conf =>
+    {
+        conf.Use<AspNet>();     //this is registering the ASPNET dependencies
+        conf.UseWriter<File>(); //note the default writer is console
+    })
+    .ConfigureWebHostDefaults(x =>
+    {
+        x.UseStartup<TStartup>().UseTestServer();
+    });
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## 2. AspNET startup
 
-### Jekyll Themes
+```
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseRouting();
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dbones-labs/auditable/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-### Support or Contact
+    //ensure its after auth*
+    app.UseAuditable();
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+
+}
+```
+
+## 3. add some auditable logs
+
+imagine you want to load an account instance from the db and update it.
+
+```
+[Route("/Account")]
+[Authorize]
+public class AccountController : Controller
+{
+    private readonly DocumentSession _session;
+    private readonly IAuditable _auditable;
+    private readonly ILogger<TestController> _logger;
+
+    public AccountController(
+        DocumentSession session,
+        IAuditable auditable,
+        ILogger<TestController> logger)
+    {
+        _session = session;
+        _auditable = auditable;
+        _logger = logger;
+    }
+
+
+    [HttpPut]
+    public async Task<ActionResult> Put(AccountResource updatedAccount)
+    {
+        if (updatedAccount == null) throw new ArgumentNullException(nameof(updatedAccount));
+        await using var auditContext = _auditable.CreateContext("Account.Update");
+
+        var account = await _session.GetById(updatedAccount.Id);
+        auditContext.WatchTargets(account); //watch for detla's
+
+        //modify
+        account.Name = updatedAccount.Name;
+
+        _logger.LogInformation("log out system information as normal");
+        return new OkResult();
+
+        //as we are within a using block, this will write the auditable entry
+        //at this point.
+    }
+}
+```
+
+# Why call it Auditable
+
+All the information we are capturing is to support an Audit from an Auditor (typically external). They will look over the Auditable Entries during their Audit. Once the External Audit of an Application is complete, they will produce an Audit Report.
+
+So by using this your application is `Auditable`.

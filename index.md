@@ -16,7 +16,7 @@ Lets take ASPNET Core, please consider using the OpenTelemetry package to get al
 
 ## 1. Builder
 
-```
+```csharp
 var builder = Host
     .CreateDefaultBuilder()
     .ConfigureAuditable(conf =>
@@ -32,7 +32,7 @@ var builder = Host
 
 ## 2. AspNET startup
 
-```
+```csharp
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 {
     app.UseRouting();
@@ -55,7 +55,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 
 imagine you want to load an account instance from the db and update it.
 
-```
+```csharp
 [Route("/Account")]
 [Authorize]
 public class AccountController : Controller

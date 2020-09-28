@@ -83,6 +83,7 @@ jobs:
           root: .
           paths:
             - results
+            - src
 
   upload_result:
     docker:
@@ -91,7 +92,8 @@ jobs:
       - attach_workspace:
           at: ./
       - run: |
-          ls
+          cd src
+          bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
 
   publish:
     docker:
@@ -102,11 +104,12 @@ jobs:
       - run: |
 
           pwd
-          cd src
           cd nupkgs
-          
           ls
           
+          dotnet nuget add source https://nuget.pkg.github.com/dbones-labs/index.json -n github -u dbones -p ${GH_TOKEN} --store-password-in-clear-text
+          dotnet nuget push *.nupkg --source "github"
+                  
 workflows:
   version: 2
   build_and_publish:

@@ -105,27 +105,22 @@ workflows:
   build_and_publish:
     jobs:
       - setup:
-          context: build-ctx
           filters:
             branches:
               ignore:
                 - docs
       - build:
-          context: build-ctx
           requires:
             - setup
       - test:
-          context: build-ctx
           requires:
             - build
       - upload_result:
-          context: build-ctx
           requires:
             - test
           filters:
             branches:
               only: master
       - publish:
-          context: build-ctx
           requires:
             - test

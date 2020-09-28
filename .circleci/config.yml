@@ -15,6 +15,7 @@ jobs:
             dotnet-gitversion | jq '.NuGetVersionV2' > ./semver/nuget.txt
             dotnet-gitversion | jq '.NuGetPreReleaseTagV2' > ./semver/nuget-sfx.txt
             dotnet-gitversion | jq '.MajorMinorPatch' > ./semver/mmp.txt
+            ls
             ls ./semver
 
       - persist_to_workspace:
@@ -31,6 +32,8 @@ jobs:
           name: build
           command: |
             
+            ls
+            ls ./semver
             APP_VERSION=$(cat ./semver/mmp.txt)
             echo $APP_VERSION
 

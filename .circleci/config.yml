@@ -36,7 +36,7 @@ jobs:
             
             ls
             ls ./semver
-            APP_VERSION=$(cat ./semver/mmp.txt)
+            APP_VERSION=$(cat ./semver/nuget.txt)
             echo $APP_VERSION
 
             export SEMVER_NUGET_SFX=$(cat ./semver/nuget-sfx.txt)
@@ -46,7 +46,7 @@ jobs:
             ls
 
             dotnet restore --packages packages
-            dotnet build --no-restore --configuration Release --force --version-suffix $SEMVER_NUGET_SFX -p:Version=$APP_VERSION
+            dotnet build --no-restore --configuration Release --force -p:Version=$APP_VERSION
 
             mkdir ./../nupkgs
             mv **/bin/**/*.nupkg ./../nupkgs

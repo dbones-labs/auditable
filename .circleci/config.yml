@@ -126,11 +126,13 @@ workflows:
           requires:
             - build
       - upload_result:
+          context: build-ctx
           requires:
             - test
           filters:
             branches:
               only: master
       - publish:
+          context: build-ctx
           requires:
             - test

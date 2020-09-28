@@ -1,0 +1,131 @@
+version: 2
+jobs:
+
+  setup:
+    docker:
+      - image: dbones-labs/auditable:latest
+    steps:
+      - checkout
+      - run:
+          name: version
+          command: |
+            mkdir semver
+            dotnet-gitversion
+            dotnet-gitversion | jq '.SemVer' > ./semver/full.txt
+            dotnet-gitversion | jq '.NuGetVersionV2' > ./semver/nuget.txt
+            dotnet-gitversion | jq '.NuGetPreReleaseTagV2' > ./semver/nuget-sfx.txt
+            dotnet-gitversion | jq '.MajorMinorPatch' > ./semver/mmp.txt
+            ls ./semver
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - src
+            - semver
+
+  build:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+      - run:
+          name: build
+          command: |
+            
+            APP_VERSION=$(cat ./semver/mmp.txt)
+            echo $APP_VERSION
+
+            export SEMVER_NUGET_SFX=$(cat ./semver/nuget-sfx.txt)
+            echo $SEMVER_NUGET_SFX
+
+            cd src
+            ls
+
+            dotnet restore --packages packages
+            dotnet build --no-restore --configuration Release --force --version-suffix $SEMVER_NUGET_SFX -p:Version=$APP_VERSION
+
+            mkdir ./../nupkgs
+            mv **/bin/**/*.nupkg ./../nupkgs
+
+            cd ./../nupkgs
+            rm *.symbols.nupkg
+            pwd
+            ls
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - nupkgs
+            - src
+
+  test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+      - run:
+          name: test
+          command: |
+            mkdir ./results
+            
+            cd src
+            dotnet test --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+            cd ../results
+            ls
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - results
+
+  upload_result:
+    docker:
+      - image: byrnedo/alpine-curl
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: |
+          ls
+
+  publish:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:3.1
+    steps:
+      - attach_workspace:
+          at: ./
+      - run: |
+
+          pwd
+          cd src
+          cd nupkgs
+          
+          ls
+          
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+      - setup:
+          context: build-ctx
+          filters:
+            branches:
+              ignore:
+                - docs
+      - build:
+          context: build-ctx
+          requires:
+            - setup
+      - test:
+          context: build-ctx
+          requires:
+            - build
+      - upload_result:
+          context: build-ctx
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - publish:
+          context: build-ctx
+          requires:
+            - test

@@ -3,7 +3,7 @@ jobs:
 
   setup:
     docker:
-      - image: dbones-labs/auditable:latest
+      - image: dboneslabs/git-tools:latest
     steps:
       - checkout
       - run:

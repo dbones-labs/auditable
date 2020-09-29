@@ -36,7 +36,7 @@ jobs:
             
             ls
             ls ./semver
-            APP_VERSION=$(cat ./semver/mmp.txt)
+            APP_VERSION=$(cat ./semver/nuget.txt)
             echo $APP_VERSION
 
             export SEMVER_NUGET_SFX=$(cat ./semver/nuget-sfx.txt)
@@ -46,7 +46,7 @@ jobs:
             ls
 
             dotnet restore --packages packages
-            dotnet build --no-restore --configuration Release --force --version-suffix $SEMVER_NUGET_SFX -p:Version=$APP_VERSION
+            dotnet build --no-restore --configuration Release --force -p:Version=$APP_VERSION
 
             mkdir ./../nupkgs
             mv **/bin/**/*.nupkg ./../nupkgs
@@ -83,6 +83,7 @@ jobs:
           root: .
           paths:
             - results
+            - src
 
   upload_result:
     docker:
@@ -91,7 +92,8 @@ jobs:
       - attach_workspace:
           at: ./
       - run: |
-          ls
+          cd src
+          bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
 
   publish:
     docker:
@@ -102,11 +104,12 @@ jobs:
       - run: |
 
           pwd
-          cd src
           cd nupkgs
-          
           ls
           
+          dotnet nuget add source https://nuget.pkg.github.com/dbones-labs/index.json -n github -u dbones -p ${GH_TOKEN} --store-password-in-clear-text
+          dotnet nuget push "*.nupkg" --source "github"
+                  
 workflows:
   version: 2
   build_and_publish:
@@ -123,11 +126,13 @@ workflows:
           requires:
             - build
       - upload_result:
+          context: build-ctx
           requires:
             - test
           filters:
             branches:
               only: master
       - publish:
+          context: build-ctx
           requires:
             - test

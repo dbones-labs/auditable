@@ -1,7 +1,7 @@
 version: 2.1
 
-orbs:
-  codecov: codecov/codecov@1.1.1
+# orbs:
+#   codecov: codecov/codecov@1.1.1
 
 jobs:
 
@@ -98,11 +98,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      # - run: |
-      #     cd src
-      #     bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
-      - codecov/upload:
-            file: results/Auditable.Tests.xml
+      - run: |
+          cd results
+          ls
+          bash <(curl -s https://codecov.io/bash) -f "*.xml"
+      # - codecov/upload:
+      #       file: results/Auditable.Tests.xml
 
   publish:
     docker:

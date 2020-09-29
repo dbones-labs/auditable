@@ -102,8 +102,8 @@ jobs:
       #     cd src
       #     bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
       - codecov/upload:
-            file: ./results/*.xml
-
+            file: results/Auditable.Tests.xml
+            
   publish:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:3.1

@@ -101,7 +101,7 @@ jobs:
       - run: |
           cd results
           ls
-          bash <(curl -s https://codecov.io/bash) -f "*.xml"
+          bash <(curl -s https://codecov.io/bash) -v -f "*.xml"
       # - codecov/upload:
       #       file: results/Auditable.Tests.xml
 

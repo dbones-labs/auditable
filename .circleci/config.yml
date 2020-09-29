@@ -94,7 +94,7 @@ jobs:
 
   upload_result:
     docker:
-      - image: byrnedo/alpine-curl
+       - image: tutum/curl
     steps:
       - attach_workspace:
           at: ./
@@ -102,8 +102,8 @@ jobs:
       #     cd src
       #     bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
       - codecov/upload:
-            file: results/Auditable.Tests.xml
-            
+            file: results/*.xml
+
   publish:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:3.1

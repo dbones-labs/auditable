@@ -79,7 +79,6 @@ jobs:
             
             cd src
             dotnet test --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-
             find . -type f -name "coverage.opencover.xml" -printf "/%P\n"| while read FILE ; do DIR=$(dirname "$FILE" ); mv ."$FILE" "$PWD"/../results/"$DIR".xml;done;
 
             cd ../results

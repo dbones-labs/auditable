@@ -1,4 +1,8 @@
-version: 2
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@1.0.2
+
 jobs:
 
   setup:
@@ -76,6 +80,8 @@ jobs:
             cd src
             dotnet test --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
+            find . -type f -name "coverage.opencover.xml" -printf "/%P\n"| while read FILE ; do DIR=$(dirname "$FILE" ); mv ."$FILE" "$PWD"/../results/"$DIR".xml;done;
+
             cd ../results
             ls
 
@@ -84,6 +90,8 @@ jobs:
           paths:
             - results
             - src
+      - store_artifacts:
+          path: results
 
   upload_result:
     docker:
@@ -91,9 +99,11 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run: |
-          cd src
-          bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
+      # - run: |
+      #     cd src
+      #     bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
+      - codecov/upload:
+            file: ./results/*.xml
 
   publish:
     docker:
@@ -129,9 +139,9 @@ workflows:
           context: build-ctx
           requires:
             - test
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - publish:
           context: build-ctx
           requires:

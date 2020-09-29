@@ -102,9 +102,11 @@ jobs:
           cd results
           ls
 
-          curl -o codecov.sh  https://codecov.io/bash
+          curl -o codecov.sh  https://codecov.io/bash -k
+
+          echo "uploading"
           ./codecov.sh  -v -f "*.xml"
-          
+
       # - codecov/upload:
       #       file: results/Auditable.Tests.xml
 

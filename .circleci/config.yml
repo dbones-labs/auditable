@@ -104,6 +104,8 @@ jobs:
 
           curl -o codecov.sh  https://codecov.io/bash -k
 
+          chmod +x codecov.sh
+
           echo "uploading"
           ./codecov.sh  -v -f "*.xml"
 

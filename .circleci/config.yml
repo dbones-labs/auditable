@@ -1,7 +1,7 @@
 version: 2.1
 
-# orbs:
-#   codecov: codecov/codecov@1.1.1
+orbs:
+  codecov: codecov/codecov@1.1.1
 
 jobs:
 
@@ -94,23 +94,23 @@ jobs:
 
   upload_result:
     docker:
-       - image: tutum/curl
+       - image: circleci/php
     steps:
       - attach_workspace:
           at: ./
-      - run: |
-          cd results
-          ls
+      # - run: |
+      #     cd results
+      #     ls
 
-          curl -o codecov.sh  https://codecov.io/bash -k
+      #     curl -o codecov.sh  https://codecov.io/bash -k
 
-          chmod +x codecov.sh
+      #     chmod +x codecov.sh
 
-          echo "uploading"
-          ./codecov.sh  -v -f "*.xml"
+      #     echo "uploading"
+      #     ./codecov.sh  -v -f "*.xml"
 
-      # - codecov/upload:
-      #       file: results/Auditable.Tests.xml
+      - codecov/upload:
+            file: results/*.xml
 
   publish:
     docker:

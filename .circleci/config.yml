@@ -97,7 +97,7 @@ jobs:
        - image: circleci/php
     steps:
       - attach_workspace:
-          at: ./
+          at: ./results
       # - run: |
       #     cd results
       #     ls
@@ -110,7 +110,7 @@ jobs:
       #     ./codecov.sh  -v -f "*.xml"
 
       - codecov/upload:
-            file: results/*.xml
+            file: "*.xml"
 
   publish:
     docker:

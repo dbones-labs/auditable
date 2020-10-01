@@ -78,7 +78,7 @@ jobs:
             mkdir ./results
             
             cd src
-            dotnet test --no-restore --no-build --configuration Release --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+            dotnet test --no-restore --no-build --configuration Release --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  /p:Exclude="[*.*Tests]*"
             find . -type f -name "coverage.opencover.xml" -printf "/%P\n"| while read FILE ; do DIR=$(dirname "$FILE" ); mv ."$FILE" "$PWD"/../results"$DIR".coverage.opencover.xml;done;
 
             cd ../results

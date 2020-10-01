@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="07c12b60-07dc-49c6-92f6-343fbdfdc2ea" name="geo45@PORTAL 2020-09-29 23:02:13" runUser="PORTAL\geo45" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2020-09-29T23:02:13.2444216+01:00" queuing="2020-09-29T23:02:13.2444234+01:00" start="2020-09-29T23:02:12.3909085+01:00" finish="2020-09-29T23:02:13.2716024+01:00" />
+  <TestSettings name="default" id="5d4f5d88-f433-4b59-885a-52e04234be7d">
+    <Deployment runDeploymentRoot="geo45_PORTAL_2020-09-29_23_02_13" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="a859a524-244f-4cac-b598-5dfa1059a4bb" testId="a18df17d-2b83-1690-4c22-a62619d97dd1" testName="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_a_target_with_audit_modified" computerName="PORTAL" duration="00:00:00.0007754" startTime="2020-09-29T23:02:13.1590642+01:00" endTime="2020-09-29T23:02:13.1598396+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a859a524-244f-4cac-b598-5dfa1059a4bb" />
+    <UnitTestResult executionId="ef70fbba-e18d-411f-b435-2e42fb40c2c6" testId="61def5dd-942e-d4df-41fb-10ad521291a0" testName="Auditable.Tests.Format.When_creating_a_log_entry.should_add_the_expected_log_entry" computerName="PORTAL" duration="00:00:00.0008368" startTime="2020-09-29T23:02:13.1737058+01:00" endTime="2020-09-29T23:02:13.1745426+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef70fbba-e18d-411f-b435-2e42fb40c2c6" />
+    <UnitTestResult executionId="5c0a3227-489b-4ae1-9067-bfd2a08b8437" testId="caf0d6a6-31a7-4fcc-7c04-a161c49ef2ac" testName="Auditable.Tests.Core.When_autiding_2_objects_1_edit_1_read.should_add_a_single_log_entry_with_2_targets" computerName="PORTAL" duration="00:00:00.0251529" startTime="2020-09-29T23:02:13.1157073+01:00" endTime="2020-09-29T23:02:13.1408602+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5c0a3227-489b-4ae1-9067-bfd2a08b8437" />
+    <UnitTestResult executionId="1b3e8bc8-0240-4715-a250-51be32cd8247" testId="cc0cb48e-7d81-1feb-175d-5ece48c3b2b7" testName="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_a_deltas_entry" computerName="PORTAL" duration="00:00:00.0005874" startTime="2020-09-29T23:02:13.1598798+01:00" endTime="2020-09-29T23:02:13.1604672+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1b3e8bc8-0240-4715-a250-51be32cd8247" />
+    <UnitTestResult executionId="2825439b-46ff-4055-84eb-295d571a9de8" testId="0370c5b5-5e9b-c4f2-8a4f-4d59326bac34" testName="Auditable.Tests.Core.Explicit.When_auditing_explicit_read.should_have_a_target_with_audit_removed_and_no_delta" computerName="PORTAL" duration="00:00:00.0007803" startTime="2020-09-29T23:02:13.1563504+01:00" endTime="2020-09-29T23:02:13.1571307+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2825439b-46ff-4055-84eb-295d571a9de8" />
+    <UnitTestResult executionId="6563fd60-8eea-4688-a326-a52758b97dd1" testId="bb768799-f189-d40a-c75e-01677e5412fa" testName="Auditable.Tests.Core.When_the_scope_name_is_set.should_log_an_entry_with_the_action_name_set" computerName="PORTAL" duration="00:00:00.0019156" startTime="2020-09-29T23:02:13.1494948+01:00" endTime="2020-09-29T23:02:13.1514104+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6563fd60-8eea-4688-a326-a52758b97dd1" />
+    <UnitTestResult executionId="5f1776d3-dbf1-403f-a6d2-c1278c040721" testId="0607017b-715c-dd8e-c55e-45b70c70f7d0" testName="Auditable.Tests.Core.Observed.When_auditing_observed_read.should_have_a_target_with_audit_read_and_no_delta" computerName="PORTAL" duration="00:00:00.0007794" startTime="2020-09-29T23:02:13.1714091+01:00" endTime="2020-09-29T23:02:13.1721885+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5f1776d3-dbf1-403f-a6d2-c1278c040721" />
+    <UnitTestResult executionId="ae381712-cf36-4f51-9289-2af2a47c4333" testId="47864e48-4f98-d2d6-8900-2232bfec76ea" testName="Auditable.Tests.Core.Explicit.When_auditing_explicit_delete.should_have_a_target_with_audit_removed_and_no_delta" computerName="PORTAL" duration="00:00:00.0011487" startTime="2020-09-29T23:02:13.1535893+01:00" endTime="2020-09-29T23:02:13.1547380+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ae381712-cf36-4f51-9289-2af2a47c4333" />
+    <UnitTestResult executionId="21a559f8-cd8e-4633-b4b2-349f12da2abe" testId="4e7a9016-5d2b-3e11-4acd-c15a63cae108" testName="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_recorded_a_delta" computerName="PORTAL" duration="00:00:00.0093639" startTime="2020-09-29T23:02:13.1605020+01:00" endTime="2020-09-29T23:02:13.1698659+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="21a559f8-cd8e-4633-b4b2-349f12da2abe" />
+    <UnitTestResult executionId="48838f7f-bca8-4a25-abec-85cb2e14bcaf" testId="392a950a-9445-0f26-decb-7f05dac3176d" testName="Auditable.Tests.Format.When_writing_an_audit_entry.should_log_using_json_format" computerName="PORTAL" duration="00:00:00.0011980" startTime="2020-09-29T23:02:13.2021857+01:00" endTime="2020-09-29T23:02:13.2033837+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="48838f7f-bca8-4a25-abec-85cb2e14bcaf" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_a_deltas_entry" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="cc0cb48e-7d81-1feb-175d-5ece48c3b2b7">
+      <Execution id="1b3e8bc8-0240-4715-a250-51be32cd8247" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Observed" name="When_auditing_observed_change::should_have_a_deltas_entry" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.Observed.When_auditing_observed_read.should_have_a_target_with_audit_read_and_no_delta" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="0607017b-715c-dd8e-c55e-45b70c70f7d0">
+      <Execution id="5f1776d3-dbf1-403f-a6d2-c1278c040721" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Observed" name="When_auditing_observed_read::should_have_a_target_with_audit_read_and_no_delta" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Format.When_writing_an_audit_entry.should_log_using_json_format" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="392a950a-9445-0f26-decb-7f05dac3176d">
+      <Execution id="48838f7f-bca8-4a25-abec-85cb2e14bcaf" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Format" name="When_writing_an_audit_entry::should_log_using_json_format" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_recorded_a_delta" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="4e7a9016-5d2b-3e11-4acd-c15a63cae108">
+      <Execution id="21a559f8-cd8e-4633-b4b2-349f12da2abe" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Observed" name="When_auditing_observed_change::should_have_recorded_a_delta" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.Observed.When_auditing_observed_change.should_have_a_target_with_audit_modified" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="a18df17d-2b83-1690-4c22-a62619d97dd1">
+      <Execution id="a859a524-244f-4cac-b598-5dfa1059a4bb" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Observed" name="When_auditing_observed_change::should_have_a_target_with_audit_modified" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.Explicit.When_auditing_explicit_read.should_have_a_target_with_audit_removed_and_no_delta" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="0370c5b5-5e9b-c4f2-8a4f-4d59326bac34">
+      <Execution id="2825439b-46ff-4055-84eb-295d571a9de8" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Explicit" name="When_auditing_explicit_read::should_have_a_target_with_audit_removed_and_no_delta" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.Explicit.When_auditing_explicit_delete.should_have_a_target_with_audit_removed_and_no_delta" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="47864e48-4f98-d2d6-8900-2232bfec76ea">
+      <Execution id="ae381712-cf36-4f51-9289-2af2a47c4333" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core.Explicit" name="When_auditing_explicit_delete::should_have_a_target_with_audit_removed_and_no_delta" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.When_the_scope_name_is_set.should_log_an_entry_with_the_action_name_set" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="bb768799-f189-d40a-c75e-01677e5412fa">
+      <Execution id="6563fd60-8eea-4688-a326-a52758b97dd1" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core" name="When_the_scope_name_is_set::should_log_an_entry_with_the_action_name_set" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Format.When_creating_a_log_entry.should_add_the_expected_log_entry" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="61def5dd-942e-d4df-41fb-10ad521291a0">
+      <Execution id="ef70fbba-e18d-411f-b435-2e42fb40c2c6" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Format" name="When_creating_a_log_entry::should_add_the_expected_log_entry" />
+    </UnitTest>
+    <UnitTest name="Auditable.Tests.Core.When_autiding_2_objects_1_edit_1_read.should_add_a_single_log_entry_with_2_targets" storage="d:\_code\gh-labs\auditable\src\auditable.tests\bin\release\netcoreapp3.1\auditable.tests.dll" id="caf0d6a6-31a7-4fcc-7c04-a161c49ef2ac">
+      <Execution id="5c0a3227-489b-4ae1-9067-bfd2a08b8437" />
+      <TestMethod codeBase="D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll" adapterTypeName="executor://machine.vstestadapter/" className="Auditable.Tests.Core" name="When_autiding_2_objects_1_edit_1_read::should_add_a_single_log_entry_with_2_targets" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="a18df17d-2b83-1690-4c22-a62619d97dd1" executionId="a859a524-244f-4cac-b598-5dfa1059a4bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="61def5dd-942e-d4df-41fb-10ad521291a0" executionId="ef70fbba-e18d-411f-b435-2e42fb40c2c6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="caf0d6a6-31a7-4fcc-7c04-a161c49ef2ac" executionId="5c0a3227-489b-4ae1-9067-bfd2a08b8437" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cc0cb48e-7d81-1feb-175d-5ece48c3b2b7" executionId="1b3e8bc8-0240-4715-a250-51be32cd8247" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0370c5b5-5e9b-c4f2-8a4f-4d59326bac34" executionId="2825439b-46ff-4055-84eb-295d571a9de8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb768799-f189-d40a-c75e-01677e5412fa" executionId="6563fd60-8eea-4688-a326-a52758b97dd1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0607017b-715c-dd8e-c55e-45b70c70f7d0" executionId="5f1776d3-dbf1-403f-a6d2-c1278c040721" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="47864e48-4f98-d2d6-8900-2232bfec76ea" executionId="ae381712-cf36-4f51-9289-2af2a47c4333" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4e7a9016-5d2b-3e11-4acd-c15a63cae108" executionId="21a559f8-cd8e-4633-b4b2-349f12da2abe" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="392a950a-9445-0f26-decb-7f05dac3176d" executionId="48838f7f-bca8-4a25-abec-85cb2e14bcaf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="10" executed="10" passed="10" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>Machine Specifications Visual Studio Test Adapter - Executing Source Specifications.&#xD;
+Machine Specifications Visual Studio Test Adapter - Discovering Specifications.&#xD;
+Machine Specifications Visual Studio Test Adapter - Discovering...looking in D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll&#xD;
+Machine Specifications Visual Studio Test Adapter - Discovery Complete - 10 specifications in 1 of 1 assemblies scanned.&#xD;
+Machine Specifications Visual Studio Test Adapter - Executing Test Specifications.&#xD;
+Machine Specifications Visual Studio Test Adapter - Filter property set ''&#xD;
+Machine Specifications Visual Studio Test Adapter - Executing 10 tests in 'D:\_code\gh-labs\auditable\src\Auditable.Tests\bin\Release\netcoreapp3.1\Auditable.Tests.dll'.&#xD;
+Machine Specifications Visual Studio Test Adapter - Execution Complete - 10 of 10 specifications in 1 assemblies.&#xD;
+Machine Specifications Visual Studio Test Adapter - Executing Source Specifications Complete.&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

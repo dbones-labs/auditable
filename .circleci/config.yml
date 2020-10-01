@@ -1,7 +1,7 @@
 version: 2.1
 
-orbs:
-  codecov: codecov/codecov@1.1.1
+# orbs:
+#   codecov: codecov/codecov@1.1.1
 
 jobs:
 
@@ -94,23 +94,20 @@ jobs:
 
   upload_result:
     docker:
-       - image: circleci/php
+       - image: dboneslabs/tools-docker-codecov
     steps:
       - attach_workspace:
           at: ./results
-      # - run: |
-      #     cd results
-      #     ls
+      - run: |
+          cd results
+          ls
+          REPORTS="${PWD}/*.xml"
 
-      #     curl -o codecov.sh  https://codecov.io/bash -k
+          echo "uploading ${REPORTS}"
+          codecov -v -f "${REPORTS}"
 
-      #     chmod +x codecov.sh
-
-      #     echo "uploading"
-      #     ./codecov.sh  -v -f "*.xml"
-
-      - codecov/upload:
-            file: "*.xml"
+      # - codecov/upload:
+      #       file: "*.xml"
 
   publish:
     docker:

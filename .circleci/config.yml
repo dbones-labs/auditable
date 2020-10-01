@@ -105,7 +105,7 @@ jobs:
           ls
 
           echo "uploading ${REPORTS}"
-          ./codecov.sh -v -f "${REPORTS}"
+          ./codecov.sh -f "${REPORTS}"
 
       # - codecov/upload:
       #       file: "*.xml"

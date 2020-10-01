@@ -7,7 +7,7 @@ jobs:
 
   setup:
     docker:
-      - image: dboneslabs/git-tools:latest
+      - image: dboneslabs/tools-docker-gittools:latest
     steps:
       - checkout
       - run:
@@ -100,11 +100,12 @@ jobs:
           at: ./results
       - run: |
           cd results
-          ls
           REPORTS="${PWD}/*.xml"
+          cp /app/* ${PWD}/
+          ls
 
           echo "uploading ${REPORTS}"
-          codecov -v -f "${REPORTS}"
+          ./codecov.sh -v -f "${REPORTS}"
 
       # - codecov/upload:
       #       file: "*.xml"

@@ -1,9 +1,10 @@
-version: 2
+version: 2.1
+
 jobs:
 
   setup:
     docker:
-      - image: dboneslabs/git-tools:latest
+      - image: dboneslabs/tools-docker-gittools:latest
     steps:
       - checkout
       - run:
@@ -74,7 +75,8 @@ jobs:
             mkdir ./results
             
             cd src
-            dotnet test --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+            dotnet test --no-restore --no-build --configuration Release --logger trx --results-directory ../results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover  /p:Exclude="[*.*Tests]*"
+            find . -type f -name "coverage.opencover.xml" -printf "/%P\n"| while read FILE ; do DIR=$(dirname "$FILE" ); mv ."$FILE" "$PWD"/../results"$DIR".coverage.opencover.xml;done;
 
             cd ../results
             ls
@@ -84,16 +86,23 @@ jobs:
           paths:
             - results
             - src
+      - store_artifacts:
+          path: results
 
   upload_result:
     docker:
-      - image: byrnedo/alpine-curl
+       - image: dboneslabs/tools-docker-codecov
     steps:
       - attach_workspace:
-          at: ./
+          at: ./results
       - run: |
-          cd src
-          bash <(curl -s https://codecov.io/bash) -f "*.Tests/coverage.opencover.xml"
+          cd results
+          REPORTS="${PWD}/*.xml"
+          cp /app/* ${PWD}/
+          ls
+
+          echo "uploading ${REPORTS}"
+          ./codecov.sh -f "${REPORTS}"
 
   publish:
     docker:

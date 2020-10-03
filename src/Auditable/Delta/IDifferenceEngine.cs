@@ -1,4 +1,4 @@
-﻿namespace Auditable
+﻿namespace Auditable.Delta
 {
     using Newtonsoft.Json.Linq;
 

@@ -5,6 +5,9 @@
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Collectors;
+    using Collectors.EntityId;
+    using Delta;
+    using Infrastructure;
     using Microsoft.Extensions.Logging;
     using Parsing;
     using Writers;

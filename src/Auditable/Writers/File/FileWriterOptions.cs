@@ -1,6 +1,7 @@
 ﻿namespace Auditable.Writers.File
 {
     using System.IO;
+    using Infrastructure;
 
     public class FileWriterOptions
     {

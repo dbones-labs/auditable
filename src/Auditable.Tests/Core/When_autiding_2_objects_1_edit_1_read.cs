@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Configuration;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using Models.Simple;
     using Parsing;
-    using Environment = global::Auditable.Collectors.Environment;
+    using Environment = global::Auditable.Collectors.Environment.Environment;
 
     [Subject("auditable")]
     public class When_autiding_2_objects_1_edit_1_read

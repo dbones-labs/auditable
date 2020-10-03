@@ -1,4 +1,4 @@
-﻿namespace Auditable.Collectors
+﻿namespace Auditable.Collectors.Request
 {
     using System.Threading.Tasks;
 

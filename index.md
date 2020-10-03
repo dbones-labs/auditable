@@ -108,7 +108,7 @@ there is some keys bits of information:
 - Targets - all the objects being observed to see if they were Read, Modified or Deleted
 - Id - is the unique id of the Auditable entry
 
-```
+```json
 {
     "Action": "Account.Update",
     "DateTime": "1980-01-02T10:03:15Z",

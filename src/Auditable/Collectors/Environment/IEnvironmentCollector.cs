@@ -1,4 +1,4 @@
-﻿namespace Auditable.Collectors
+﻿namespace Auditable.Collectors.Environment
 {
     using System.Threading.Tasks;
 

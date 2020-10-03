@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Collectors;
     using global::Auditable.Collectors;
+    using global::Auditable.Collectors.Request;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 

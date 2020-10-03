@@ -1,5 +1,6 @@
 ﻿namespace Auditable.Tests
 {
+    using Infrastructure;
     using Newtonsoft.Json.Linq;
     using Parsing;
 

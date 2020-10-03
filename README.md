@@ -1,5 +1,7 @@
 # auditable
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7dc1cf53814a4165b45306b158bf06bc)](https://app.codacy.com/gh/dbones-labs/auditable?utm_source=github.com&utm_medium=referral&utm_content=dbones-labs/auditable&utm_campaign=Badge_Grade_Settings)
+
 This is a small auditing framework
 
 The need for auditing already exists in projects, the requirement to log information to prove something happened, but also to capture who, what and when a business action happened.

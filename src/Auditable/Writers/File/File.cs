@@ -14,9 +14,9 @@
             services.Configure(_options);
         }
 
-        public void Setup(Action<FileWriterOptions> setup)
+        public void Setup(Action<FileWriterOptions> options)
         {
-            _options = setup;
+            _options = options;
         }
     }
 }

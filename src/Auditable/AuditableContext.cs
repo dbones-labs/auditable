@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
-    using Collectors;
     using Collectors.EntityId;
     using Delta;
     using Infrastructure;
@@ -53,7 +52,7 @@
                 var type = instance.GetType();
                 var key = GetKey(type, id);
 
-                var target = new Target()
+                var target = new Target
                 {
                     Type = type.FullName,
                     Id = id,
@@ -83,7 +82,7 @@
 
             if (!_targets.TryGetValue(key, out var target))
             {
-                target = new Target()
+                target = new Target
                 {
                     Type = type.FullName,
                     Id = id
@@ -99,7 +98,11 @@
         {
             foreach (var target in _targets.Values)
             {
-                if(target.ActionStyle == ActionStyle.Explicit) continue;
+                if (target.ActionStyle == ActionStyle.Explicit)
+                {
+                    continue;
+                }
+
                 var possibleChange = _serializer.Serialize(target.Instance);
                 var diff = _engine.Differences(target.Before, possibleChange);
                 target.Delta = diff;

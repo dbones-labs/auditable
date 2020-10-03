@@ -7,7 +7,7 @@
     {
         public Task<Environment> Extract()
         {
-            var env = new Environment()
+            var env = new Environment
             {
                 Application = Assembly.GetEntryAssembly().FullName,
                 Host = System.Environment.MachineName

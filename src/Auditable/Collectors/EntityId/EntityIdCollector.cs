@@ -30,11 +30,8 @@
                 throw new NoIdAttributeException(instance.GetType());
             }
 
+            
             var id = idField.GetValue(instance)?.ToString();
-            //if (string.IsNullOrEmpty(id))
-            //{
-            //    throw new NoIdValueException(instance.GetType(), idField.Name);
-            //}
 
             return id;
 

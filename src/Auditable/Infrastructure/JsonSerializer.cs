@@ -1,4 +1,4 @@
-﻿namespace Auditable
+﻿namespace Auditable.Infrastructure
 {
     using Newtonsoft.Json;
 

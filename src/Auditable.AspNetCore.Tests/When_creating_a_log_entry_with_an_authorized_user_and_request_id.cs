@@ -5,6 +5,9 @@
     using System.Net.Http;
     using Collectors;
     using global::Auditable.Collectors;
+    using global::Auditable.Collectors.Initiator;
+    using global::Auditable.Collectors.Request;
+    using global::Auditable.Infrastructure;
     using global::Auditable.Tests;
     using global::Auditable.Tests.Models.Simple;
     using Infrastructure;
@@ -12,7 +15,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Parsing;
     using Writers;
-    using Environment = global::Auditable.Collectors.Environment;
+    using Environment = global::Auditable.Collectors.Environment.Environment;
 
     [Subject("auditable")]
     public class When_creating_a_log_entry_with_an_authorized_user_and_request_id

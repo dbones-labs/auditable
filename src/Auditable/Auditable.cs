@@ -1,6 +1,7 @@
 ﻿namespace Auditable
 {
     using System;
+    using Infrastructure;
 
     public class Auditable : IAuditable
     {
@@ -13,7 +14,7 @@
 
         public IAuditableContext CreateContext(string name, params object[] targets)
         {
-            if (name == null) throw new ArgumentNullException(nameof(name));
+            Code.Require(()=> name != null, nameof(name));
 
             var context = _contextCtor();
             context.SetName(name);

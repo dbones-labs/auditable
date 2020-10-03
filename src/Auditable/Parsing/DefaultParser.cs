@@ -3,7 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Collectors;
+    using Collectors.EntityId;
+    using Collectors.Environment;
+    using Collectors.Initiator;
+    using Collectors.Request;
+    using Infrastructure;
 
     public class DefaultParser : IParser
     {
@@ -29,7 +33,10 @@
 
         public async Task<string> Parse(string id, string actionName, IEnumerable<Target> targets)
         {
-            var payload = new AuditableEntry()
+            Code.Require(() => !string.IsNullOrEmpty(id), nameof(id));
+            Code.Require(()=> !string.IsNullOrEmpty(actionName), nameof(actionName));
+
+            var payload = new AuditableEntry
             {
                 Id = id,
                 Action = actionName,
@@ -38,7 +45,7 @@
                 Environment = await _environmentCollector.Extract(),
                 Initiator = await _initiatorCollector.Extract(),
                 Request = await _requestContextCollector.Extract(),
-                Targets = targets.Select(x=> new AuditableTarget()
+                Targets = targets.Select(x=> new AuditableTarget
                 {
                     Delta = x.Delta,
                     Id = x.Id ?? _entityIdCollector.Extract(x),

@@ -1,5 +1,6 @@
 ﻿namespace Auditable.Tests
 {
+    using Infrastructure;
     using Machine.Specifications;
 
     public class ResetTheClock : ICleanupAfterEveryContextInAssembly

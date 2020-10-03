@@ -2,6 +2,12 @@
 {
     using System;
     using Collectors;
+    using Collectors.EntityId;
+    using Collectors.Environment;
+    using Collectors.Initiator;
+    using Collectors.Request;
+    using Delta;
+    using Infrastructure;
     using Parsing;
     using Writers;
     using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +23,8 @@
         /// <param name="services">the setup</param>
         public static IServiceCollection AddAuditable(this IServiceCollection services)
         {
+            Code.Require(()=> services!= null, nameof(services));
+
             //core
             services.AddTransient<IAuditable, Auditable>();
             services.AddScoped<IInternalAuditableContext, AuditableContext>();
@@ -46,6 +54,8 @@
         /// <param name="conf">allows you to provides extensions and overrides</param>
         public static IHostBuilder ConfigureAuditable(this IHostBuilder builder, Action<AuditableExtension> conf = null)
         {
+            Code.Require(()=> builder!= null, nameof(builder));
+
             var setup = new AuditableExtension();
             conf?.Invoke(setup);
 

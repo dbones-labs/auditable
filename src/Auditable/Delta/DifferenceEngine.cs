@@ -1,4 +1,4 @@
-﻿namespace Auditable
+﻿namespace Auditable.Delta
 {
     using JsonDiffPatchDotNet;
     using Newtonsoft.Json.Linq;
@@ -7,15 +7,18 @@
     {
         public JToken Differences(string left, string right)
         {
-            if (left == right) return null;
+            if (left == right)
+            {
+                return null;
+            }
             
             var jdp = new JsonDiffPatch();
             var leftToken = JToken.Parse(left);
             var rightToken = JToken.Parse(right);
 
             JToken patch = jdp.Diff(leftToken, rightToken);
-            if (!patch.HasValues) return null;
-            return patch;
+            
+            return patch.HasValues ? patch : null;
         }
     }
 }

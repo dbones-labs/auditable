@@ -4,6 +4,7 @@
     using System.Linq;
     using Configuration;
     using global::Auditable.Tests.Models.Simple;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using PowerAssert;

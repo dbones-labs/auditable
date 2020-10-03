@@ -5,7 +5,7 @@ has_children: false
 nav_order: 3
 ---
 
-# Marking as Read
+# Marking as Removed
 
 We can record a target as being removed
 

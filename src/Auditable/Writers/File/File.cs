@@ -2,6 +2,7 @@
 {
     using System;
     using Configuration;
+    using Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
 
     public class File : IWriterProvider, ISetupOptions<FileWriterOptions>
@@ -10,13 +11,15 @@
 
         public void RegisterServices(IServiceCollection services)
         {
+            Code.Require(()=> services != null, nameof(services));
             services.AddSingleton<IWriter, FileWriter>();
             services.Configure(_options);
         }
 
-        public void Setup(Action<FileWriterOptions> setup)
+        public void Setup(Action<FileWriterOptions> options)
         {
-            _options = setup;
+            Code.Require(()=> options != null, nameof(options));
+            _options = options;
         }
     }
 }

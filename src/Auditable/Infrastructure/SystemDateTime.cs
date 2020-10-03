@@ -1,4 +1,4 @@
-﻿namespace Auditable
+﻿namespace Auditable.Infrastructure
 {
     using System;
 
@@ -10,6 +10,7 @@
 
         public static void SetDateTime(Func<DateTime> getDateTime)
         {
+            Code.Require(()=> getDateTime != null, nameof(getDateTime));
             _getDateTime = getDateTime;
         }
 

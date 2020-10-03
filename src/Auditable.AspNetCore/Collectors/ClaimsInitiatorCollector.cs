@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using global::Auditable.Collectors;
+    using global::Auditable.Collectors.Initiator;
 
     class ClaimsInitiatorCollector : IInitiatorCollector
     {

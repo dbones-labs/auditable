@@ -2,6 +2,7 @@
 {
     using System;
     using Configuration;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using Models.Simple;

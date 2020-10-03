@@ -1,4 +1,4 @@
-﻿using Env = Auditable.Collectors.Environment;
+﻿using Env = Auditable.Collectors.Environment.Environment;
 
 namespace Auditable.Tests.Core.Observed
 {
@@ -8,6 +8,7 @@ namespace Auditable.Tests.Core.Observed
     using Configuration;
     using global::Auditable.Parsing;
     using global::Auditable.Tests.Models.Simple;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
     using PowerAssert;

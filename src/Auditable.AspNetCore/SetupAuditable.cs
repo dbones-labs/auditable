@@ -2,6 +2,8 @@
 {
     using Collectors;
     using global::Auditable.Collectors;
+    using global::Auditable.Collectors.Initiator;
+    using global::Auditable.Collectors.Request;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;

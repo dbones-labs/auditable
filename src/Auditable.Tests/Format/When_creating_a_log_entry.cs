@@ -5,9 +5,10 @@
     using Configuration;
     using global::Auditable.Parsing;
     using global::Auditable.Tests.Models.Simple;
+    using Infrastructure;
     using Machine.Specifications;
     using Microsoft.Extensions.DependencyInjection;
-    using Environment = global::Auditable.Collectors.Environment;
+    using Environment = global::Auditable.Collectors.Environment.Environment;
 
     [Subject("auditable")]
     public class When_creating_a_log_entry

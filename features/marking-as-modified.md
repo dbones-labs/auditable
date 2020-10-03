@@ -26,6 +26,8 @@ var person = _documentSession.GetById("123"); // 1️⃣
 await using var auditContext = _auditable.CreateContext("Person.Read", person); // 2️⃣
 
 person.Name = "Chan"; // 3️⃣
+
+// 4️⃣
 ```
 
 ### via `CreateContext`

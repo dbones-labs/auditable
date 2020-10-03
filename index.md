@@ -30,7 +30,7 @@ var builder = Host
     });
 ```
 
-## 2. AspNET startup
+## 2. ASPNET Core startup
 
 ```csharp
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -96,8 +96,49 @@ public class AccountController : Controller
 }
 ```
 
-# Why call it Auditable
+## output app-dir\1980-01-02-10-03-15_audit-id.auditable
 
-All the information we are capturing is to support an Audit from an Auditor (typically external). They will look over the Auditable Entries during their Audit. Once the External Audit of an Application is complete, they will produce an Audit Report.
+a file is created for this audit entry (without line breaks)
 
-So by using this your application is `Auditable`.
+there is some keys bits of information:
+
+- Initiator - is the person making the change (note this should support OAuth2/OIDC)
+- Environment - is the server that is running the app, and what version of the app
+- Request - is information about the single request (pulling the w3c info using OpenTelemetry)
+- Targets - all the objects being observed to see if they were Read, Modified or Deleted
+- Id - is the unique id of the Auditable entry
+
+```
+{
+    "Action": "Account.Update",
+    "DateTime": "1980-01-02T10:03:15Z",
+    "Initiator": {
+        "Id": "abc-123",
+        "Name": "dave"
+    },
+    "Environment": {
+        "Host": "LAPTOP-VRDBEDO2",
+        "Application": "testhost.x86, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+    },
+    "Request": {
+        "SpanId": "16ba66e3222c3149",
+        "TraceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+        "ParentId": "00f067aa0ba902b7"
+    },
+    "Targets": [
+        {
+            "Type": "Auditable.AspNetCore.Tests.Account",
+            "Id": "2",
+            "Delta": {
+                "Name": [
+                    "Dave",
+                    "Chan"
+                ]
+            },
+            "Style": "Observed",
+            "Audit": "Modified"
+        }
+    ],
+    "Id": "audit-id"
+}
+```

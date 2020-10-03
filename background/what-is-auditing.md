@@ -1,5 +1,6 @@
 ---
 title: Auditing vs Debugging
+parent: Background
 has_children: false
 nav_order: 2
 ---

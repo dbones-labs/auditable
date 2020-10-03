@@ -1,8 +1,8 @@
 ---
 title: ASPNET Example
-parent: Auditing vs Debugging
+parent: Quick Examples
 has_children: false
-nav_order: 1
+nav_order: 2
 ---
 
 # Simple ASPNET example

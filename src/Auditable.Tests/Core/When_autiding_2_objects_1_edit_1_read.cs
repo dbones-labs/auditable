@@ -56,15 +56,15 @@
             {
                 new AuditableTarget
                 {
-                    Id = null,
-                    Audit = AuditType.Modified,
+                    Id = "abc",
+                    Audit = AuditType.Read,
                     Style = ActionStyle.Observed,
                     Type = typeof(Person).FullName
                 },
                 new AuditableTarget
                 {
-                    Id = "abc",
-                    Audit = AuditType.Read,
+                    Id = null,
+                    Audit = AuditType.Modified,
                     Style = ActionStyle.Observed,
                     Type = typeof(Person).FullName
                 }

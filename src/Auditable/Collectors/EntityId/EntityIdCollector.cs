@@ -4,15 +4,16 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using Infrastructure;
 
     public class EntityIdCollector : IEntityIdCollector
     {
         public string Extract(object instance)
         {
+            Code.Require(()=> instance != null, nameof(instance));
+            
             var type = instance.GetType();
-
             var fields = AllFields(AllTypes(type));
-
 
             var idFieldPatterns = new[]
             {
@@ -39,11 +40,14 @@
 
         private IEnumerable<FieldInfo> AllFields(IEnumerable<Type> typeTree)
         {
+            Code.Require(()=> typeTree != null, nameof(typeTree));
             return typeTree.SelectMany(x => x.GetTypeInfo().DeclaredFields);
         }
 
         private IEnumerable<Type> AllTypes(Type currentType)
         {
+            Code.Require(() => currentType != null, nameof(currentType));
+
             if (currentType.BaseType != null)
             {
                 foreach (Type type in AllTypes(currentType.BaseType))
@@ -57,6 +61,7 @@
         
         private string GetPropertyBackingFieldName(string propertyName)
         {
+            Code.Require(()=> !string.IsNullOrEmpty(propertyName), nameof(propertyName));
             return $"<{propertyName}>k__BackingField";
         }
 

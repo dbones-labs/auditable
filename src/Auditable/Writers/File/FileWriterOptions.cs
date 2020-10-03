@@ -7,6 +7,7 @@
     {
         public GetFileName GetFileName { get; set; } = (id, action) =>
         {
+            Code.Require(()=> !string.IsNullOrEmpty(id), nameof(id));
             var date = SystemDateTime.UtcNow.ToString("yyyy-MM-dd-H-mm-ss");
             return $"{date}_{id}.auditable";
         };

@@ -9,7 +9,7 @@ nav_order: 2
 
 This is how you can add `auditable` to you ASPNET application with 
 
-:pencil2: we has setup
+note ✏️- we has setup
 
 - OpenTelemetry - to provide request infromation
 - OAuth2/ODIC - to show who was the initator of the call

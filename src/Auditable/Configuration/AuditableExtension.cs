@@ -1,6 +1,7 @@
 ﻿namespace Auditable.Configuration
 {
     using System.Collections.Generic;
+    using Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
 
     public class AuditableExtension
@@ -15,6 +16,7 @@
         /// <param name="services">IoC setup</param>
         internal void RegisterServices(IServiceCollection services)
         {
+            Code.Require(()=> services!= null, nameof(services));
             _writerProvider?.RegisterServices(services);
 
             foreach (var extension in _extensions)

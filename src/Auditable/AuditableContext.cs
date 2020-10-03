@@ -1,7 +1,5 @@
 ﻿namespace Auditable
 {
-    using System;
-    using System.Collections.Generic;
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Collectors.EntityId;
@@ -20,8 +18,8 @@
         private readonly IWriter _writer;
         private readonly IAuditIdGenerator _auditIdGenerator;
         private readonly ILogger<AuditableContext> _logger;
+        private readonly TargetCollection _target;
         private string _name;
-        private readonly Dictionary<string, Target> _targets = new Dictionary<string, Target>();
 
         public AuditableContext(
             IParser parser,
@@ -40,18 +38,17 @@
             _writer = writer;
             _auditIdGenerator = auditIdGenerator;
             _logger = logger;
+            _target = new TargetCollection(_entityIdCollector);
         }
 
         public void WatchTargets(params object[] targets)
         {
-
             foreach (var instance in targets)
             {
                 var copy = _serializer.Serialize(instance);
                 var id = _entityIdCollector.Extract(instance);
                 var type = instance.GetType();
-                var key = GetKey(type, id);
-
+    
                 var target = new Target
                 {
                     Type = type.FullName,
@@ -61,33 +58,37 @@
                     ActionStyle = ActionStyle.Observed
                 };
 
-                _targets.Add(key , target);
+                _target.Add(instance, target);
             }
         }
 
         public void Removed<T>(string id)
         {
+            Code.Require(()=> !string.IsNullOrEmpty(id), nameof(id));
             SetExplicateAction<T>(id, AuditType.Removed);
         }
 
         public void Read<T>(string id)
         {
+            Code.Require(() => !string.IsNullOrEmpty(id), nameof(id));
             SetExplicateAction<T>(id, AuditType.Read);
         }
 
-        public void SetExplicateAction<T>(string id, AuditType action)
+        private void SetExplicateAction<T>(string id, AuditType action)
         {
-            var type = typeof(T);
-            var key = GetKey(type, id);
+            Code.Require(() => !string.IsNullOrEmpty(id), nameof(id));
 
-            if (!_targets.TryGetValue(key, out var target))
+            var type = typeof(T);
+
+            if (!_target.TryGet(type, id, out var target))
             {
                 target = new Target
                 {
                     Type = type.FullName,
                     Id = id
                 };
-                _targets.Add(key, target);
+
+                _target.Add(type, id, target);
             }
 
             target.ActionStyle = ActionStyle.Explicit;
@@ -96,7 +97,7 @@
 
         public async Task WriteLog()
         {
-            foreach (var target in _targets.Values)
+            foreach (var target in _target)
             {
                 if (target.ActionStyle == ActionStyle.Explicit)
                 {
@@ -109,20 +110,18 @@
             }
 
             var id = _auditIdGenerator.GenerateId();
-            var parsedOutput = await _parser.Parse(id, _name, _targets.Values);
+            var parsedOutput = await _parser.Parse(id, _name, _target);
             await _writer.Write(id, _name, parsedOutput);
             _logger.LogDebug($"wrote autiable entry: {id}");
         }
 
         public void SetName(string name)
         {
+            Code.Require(() => !string.IsNullOrEmpty(name), nameof(name));
             _name = name;
         }
 
-        private string GetKey(Type type, string id)
-        {
-            return $"{type.FullName}-{id}";
-        }
+
 
         /// <summary>
         /// this will write the audit log if the code did not throw an exception

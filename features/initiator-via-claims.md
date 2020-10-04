@@ -16,15 +16,11 @@ This is the recommended way to grab the user
 
 ## Setup
 
-
 ### of `auditable` 
-
 
 Please follow the Quick Example, this shows how to setup `auditable` fully
 
-
 `auditable`'s implementation grabs the name and the id using the following Claims
-
 
 ```csharp
 initiatorCollector.Initiator = new Initiator

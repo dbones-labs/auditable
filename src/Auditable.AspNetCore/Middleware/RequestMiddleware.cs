@@ -34,6 +34,7 @@
             if (!hasW3cTraceParent || !hasActivity)
             {
                 await _next(context);
+                return;
             }
 
             //use the Activity set by the OpenTelemetry Lib

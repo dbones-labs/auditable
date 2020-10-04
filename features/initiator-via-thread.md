@@ -9,7 +9,6 @@ nav_order: 20
 
 To capture the current user against each log entry, `auditable` by default looks for the `Thread.CurrentPrincipal`
 
-
 ## When to use
 
 If you have set Thread Principal, however it can be easily extracted.

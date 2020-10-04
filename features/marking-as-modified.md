@@ -30,7 +30,7 @@ person.Name = "Chan"; // 3️⃣
 // 4️⃣
 ```
 
-### via `CreateContext`
+### via `WatchTargets`
 
 
 - 1️⃣ Read the object

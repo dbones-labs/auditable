@@ -2,7 +2,7 @@
 title: Auditing vs Debugging
 parent: Background
 has_children: false
-nav_order: 2
+nav_order: 1
 ---
 
 # How does this differ from logging?

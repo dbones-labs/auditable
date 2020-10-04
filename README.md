@@ -48,3 +48,7 @@ We use a variant of Githubflow, so all feature branches have their own pre-relea
 check out our docs for examples and more information
 
 [![docs](https://img.shields.io/badge/docs-auditable-blue)](https://dbones-labs.github.io/auditable/)
+
+## Use of this library
+
+As this is about auditing your code, it is recommend that you fully test your use-cases to ensure that the requirement is met fully.
